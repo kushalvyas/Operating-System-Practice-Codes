@@ -18,7 +18,7 @@ class Philosopher extends Thread{
 	}
 
 	@Override
-	public void run(){
+	public synchronized void run(){
 		while(true){
 			try{
 				think();
@@ -39,13 +39,15 @@ class Philosopher extends Thread{
 	public void eat(){
 		// check whether current chopstick and the next one are being used or no ..
 		if(!left.used){
+			left.pickup();
 			if(!right.used){
-				left.pickup();
 				right.pickup();
 				System.out.println("Philosopher is eating " +name);
 				right.putdown();
 				left.putdown();
 				// notify();
+			}else{
+				left.putdown();
 			}
 		}
 		try{
