@@ -1,9 +1,11 @@
 import java.util.*;
 import java.io.*;
 
+
+// producer class
 class Producer extends Thread{
-	static final int MAXQUEUE = 10;
-	public Vector stuff = new Vector();
+	static final int MAXQUEUE = 10; // max limit of buffer
+	public Vector stuff = new Vector(); // vector to allot data
 
 	@Override
 	public void run(){
@@ -16,22 +18,23 @@ class Producer extends Thread{
 		}
 	}
 
+	// producer will put stuff into the vector ... 
 	public synchronized void putStuff() throws Exception{
 		while(stuff.size() == MAXQUEUE){
 			wait();
 		}
-		stuff.addElement(new Date().toString());
+		stuff.addElement(new Date().toString()); // timepass data to be appended to the vector
 		System.out.println("put message");
 		notify();
-		sleep(1000);
+		sleep(1000); // sleep is used to slow down the output
 	}	
-
+	// the consumer will remove stuff from the vector
 	public synchronized String removeStuff() throws Exception{
 		notify();
 		while(stuff.size() == 0){
 			wait();
-		}
-		sleep(1000);
+		} 
+		sleep(1000); // sleep is used to slow down output...
 
 		String text = stuff.firstElement().toString();
 		stuff.removeElement(text);
@@ -40,6 +43,8 @@ class Producer extends Thread{
 }
 
 
+
+// consumer class
 class Consumer extends Thread{
 	Producer producer;
 	
@@ -64,6 +69,7 @@ class Consumer extends Thread{
 
 class producer_consumer extends Thread{
 
+	// main ..
 	public static void main(String[] args) {
 		System.out.println("Starting producer and Consumer");
 		Producer producer = new Producer();
