@@ -60,7 +60,7 @@ class Philosopher extends Thread{
 
 
 class Chopstick {
-	public boolean used;
+	public boolean used=false;
 	public String name;
 
 	public Chopstick(String name){
