@@ -1,6 +1,6 @@
 #  Operating-System-Practice-Codes
 
-# #to compile normal java programs 
+## to compile normal java programs 
 
 javac filename.java
 
